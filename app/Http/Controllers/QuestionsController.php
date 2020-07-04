@@ -14,8 +14,14 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
-        return view('questions.index', compact('questions'));
+        //\DB::enableQueryLog();
+        $questions = Question::with('user')->latest()->paginate(5);
+        //'with' is used to relate user in one same query, not to make lazy loading of
+        // user for each question...
+        return view('questions.index', compact('questions')); //->render();
+
+        //dd(\DB::getQueryLog());
+
     }
 
     /**
