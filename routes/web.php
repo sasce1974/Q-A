@@ -26,4 +26,5 @@ Route::get('/test', function (){
     dd($r);
 });
 
-Route::resource('questions', 'QuestionsController');
+Route::resource('questions', 'QuestionsController')->except('show');//to make show route to use slug
+Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');

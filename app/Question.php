@@ -21,7 +21,7 @@ class Question extends Model
 
     //accesor, will give $this->url
     public function getUrlAttribute(){
-        return route("questions.show", $this->id);
+        return route("questions.show", $this->slug);
     }
 
     //accesor, will give $this->created_date
@@ -37,5 +37,10 @@ class Question extends Model
             return "answered";
         }
         return "unanswered";
+    }
+
+    // accessor for html body
+    public function getBodyHtmlAttribute(){
+        return \Parsedown::instance()->text($this->body);
     }
 }
