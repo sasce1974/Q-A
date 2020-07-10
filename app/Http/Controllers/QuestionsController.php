@@ -6,6 +6,7 @@ use App\Http\Requests\AskQuestionRequest;
 use App\Question;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionsController extends Controller
 {
@@ -27,7 +28,8 @@ class QuestionsController extends Controller
         $questions = Question::with('user')->latest()->paginate(5);
         //'with' is used to relate user in one same query, not to make lazy loading of
         // user for each question...
-        return view('questions.index', compact('questions')); //->render();
+        $authenticated = Auth::check() ? true : false;
+        return view('questions.index', compact('questions', 'authenticated')); //->render();
 
         //dd(\DB::getQueryLog());
 

@@ -33,7 +33,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         //Set slug instead id on route
         Route::bind('slug', function ($slug){
-           return Question::where('slug', $slug)->first() ?? abort(404);
+           return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+           //relation 'answers.user' is added after reviewing that questions show page make many queries for user
 
         });
 
