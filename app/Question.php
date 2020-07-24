@@ -52,4 +52,34 @@ class Question extends Model
         $this->best_answer_id = $answer->id;
         $this->save();
     }
+
+    public function favorites(){
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
+
+    public function isFavorited ()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0;
+    }
+
+    public function getIsFavoritedAttribute ()
+    {
+        return $this->isFavorited();
+    }
+
+    public function getFavoritesCountAttribute(){
+        return $this->favorites->count();
+    }
+
+    public function voted(){
+        return $this->morphToMany(User::class, 'votable');
+    }
+
+    public function votedUp(){
+        return $this->voted()->wherePivot('vote', 1);
+    }
+
+    public function votedDown(){
+        return $this->voted()->wherePivot('vote', -1);
+    }
 }

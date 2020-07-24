@@ -31,3 +31,14 @@ Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.sho
 Route::resource('questions.answers', 'AnswersController')->except('index', 'create', 'show');
 //Route::post('questions/{question}/answers', 'AnswersController@store')->name('answers.store');
 Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');
+
+//test route for pdf creation
+Route::get('/questions_to_pdf', 'PDFController@generatePDF');
+
+//favorite question
+Route::post('/questions/{question}/favorites', 'FavoritesController@store')->name('questions.favorite');
+Route::delete('/questions/{question}/favorites', 'FavoritesController@destroy')->name('questions.unfavorite');
+
+//vote
+Route::post('/questions/{question}/vote', 'VoteQuestionController');
+Route::post('/answers/{answer}/vote', 'VoteAnswerController');
