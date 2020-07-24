@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class Question extends Model
 {
+    use VotableTrait;// implement methods voted, votedUp and votedDown
+
     protected $fillable = ['title', 'body'];
 
     public function user(){
@@ -71,15 +73,4 @@ class Question extends Model
         return $this->favorites->count();
     }
 
-    public function voted(){
-        return $this->morphToMany(User::class, 'votable');
-    }
-
-    public function votedUp(){
-        return $this->voted()->wherePivot('vote', 1);
-    }
-
-    public function votedDown(){
-        return $this->voted()->wherePivot('vote', -1);
-    }
 }

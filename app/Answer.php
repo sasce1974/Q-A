@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+    use VotableTrait;
 
     protected $fillable = ['body', 'user_id'];
 
@@ -60,18 +61,6 @@ class Answer extends Model
 
     public function isBest(){
         return $this->id === $this->question->best_answer_id;
-    }
-
-    public function voted(){
-        return $this->morphToMany(User::class, 'votable');
-    }
-
-    public function votedUp(){
-        return $this->voted()->wherePivot('vote', 1);
-    }
-
-    public function votedDown(){
-        return $this->voted()->wherePivot('vote', -1);
     }
 
 }
