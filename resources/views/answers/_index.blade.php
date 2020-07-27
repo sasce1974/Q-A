@@ -44,7 +44,7 @@
                             @endcan
                         </div>
                         <div class="media-body">
-                            {!! $answer->bodyHTMLFiltered() !!}
+                            {!! $answer->body_html !!}
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="ml-auto" style="min-width: 7em">

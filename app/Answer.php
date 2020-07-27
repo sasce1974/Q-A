@@ -28,7 +28,7 @@ class Answer extends Model
     }
 
     public function bodyHTMLFiltered(){
-        return strip_tags($this->body_html);
+        return $this->body_html;
     }
 
     public static function boot()

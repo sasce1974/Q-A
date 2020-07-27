@@ -47,7 +47,7 @@ class Question extends Model
 
     // accessor for html body
     public function getBodyHtmlAttribute(){
-        return strip_tags($this->bodyHTML());
+        return clean($this->bodyHTML());
     }
 
     public function getExcerptAttribute(){
