@@ -17,8 +17,8 @@
                     <div class="card-body">
                         @include('layouts._messages')
 
-                        @foreach($questions as $question)
-                            <div class="media">
+                        @forelse($questions as $question)
+                            <div class="media post">
                                 <div class="d-flex flex-column counters">
                                     <div class="vote">
                                         <strong>{{ $question->votes }}</strong> {{ Str::plural('vote', $question->votes) }}
@@ -53,11 +53,14 @@
                                         Asked by <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
                                         <small class="text-muted">{{ $question->created_date }}</small>
                                     </p>
-                                    {{ Str::limit($question->body, 250) }}
+                                    <div class="excerpt">{{ $question->excerpt(300) }}</div>
                                 </div>
                             </div>
-                            <hr>
-                            @endforeach
+                        @empty
+                            <div class="alert alert-warning">
+                                <strong>SORRY</strong> There are no questions available.
+                            </div>
+                        @endforelse
                         <div class="flex-column align-content-center">
                             {{ $questions->links() }}
                         </div>

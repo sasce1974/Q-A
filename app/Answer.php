@@ -27,6 +27,10 @@ class Answer extends Model
         return \Parsedown::instance()->text($this->body);
     }
 
+    public function bodyHTMLFiltered(){
+        return strip_tags($this->body_html);
+    }
+
     public static function boot()
     {
         parent::boot();

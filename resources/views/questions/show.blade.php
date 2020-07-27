@@ -21,25 +21,9 @@
                         <div class="media">
                             <div class="d-flex flex-column vote-controls">
 
-                                <a title="This question is useful" class="vote-up {{Auth::guest() ? 'off' : ''}}"
-                                   onclick="event.preventDefault(); document.getElementById('up-vote-question-{{$question->id}}').submit()">
-                                    <i class="fas fa-caret-up fa-3x"></i>
-                                </a>
-                                <form class="d-none" action="/laravel1/learning/public/questions/{{$question->id}}/vote" id="up-vote-question-{{$question->id}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="vote" value="1">
-                                </form>
-
-                                <span class="votes-count">{{$question->votes}}</span>
-
-                                <a title="This question is not useful" class="vote-down {{Auth::guest() ? 'off' : ''}}"
-                                   onclick="event.preventDefault(); document.getElementById('down-vote-question-{{$question->id}}').submit()">
-                                    <i class="fas fa-caret-down fa-3x"></i>
-                                </a>
-                                <form class="d-none" action="/laravel1/learning/public/questions/{{$question->id}}/vote" id="down-vote-question-{{$question->id}}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="vote" value="-1">
-                                </form>
+                                @include('shared._vote', [
+                                    'model'=>$question,
+                                ])
 
                                 <a title="Click to mark as favorite question, click again to undo"
                                    class="mt-2 favorite {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }}"
@@ -56,15 +40,14 @@
                             </div>
                             <div class="media-body">
                                 {!! $question->body_html !!}
-                                <div class="float-right" style="min-width: 12em">
-                                    <span class="text-muted">Posted {{ $question->created_date }}</span>
-                                    <div class="media mt-2">
-                                        <a href="{{ $question->user->url }}" class="pr-2">
-                                            <img src="{{ $question->user->avatar }}">
-                                        </a>
-                                        <div class="media-body mt-1">
-                                            <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-4"></div>
+                                    <div class="col-4">
+                                        @include('shared._author', [
+                                            'label'=>'Asked',
+                                            'model'=> $question,
+                                        ])
                                     </div>
                                 </div>
                             </div>

@@ -16,7 +16,7 @@ class Question extends Model
     }
 
     public function answers(){
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
     }
 
     //mutator, will populate title and then slug column with slugged title
@@ -47,6 +47,18 @@ class Question extends Model
 
     // accessor for html body
     public function getBodyHtmlAttribute(){
+        return strip_tags($this->bodyHTML());
+    }
+
+    public function getExcerptAttribute(){
+        return $this->excerpt(250);
+    }
+
+    public function excerpt($limit){
+        return Str::limit(strip_tags($this->bodyHTML()), $limit);
+    }
+
+    private function bodyHTML(){
         return \Parsedown::instance()->text($this->body);
     }
 
